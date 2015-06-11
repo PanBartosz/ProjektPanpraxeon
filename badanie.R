@@ -1,5 +1,6 @@
 data <- read.csv("results-survey254952.csv")
 data2 <-read.csv("results-survey129171.csv")
+data3 <-read.csv("results-survey898773.csv")
 srednieprimharmprim <-numeric()
 srednieprimharmprim[1] <- mean(c(data$PRIMHARMPRIMSUWAK.1., data$PRIMHARMPRIMSUWAK.1..1), na.rm = TRUE)
 srednieprimharmprim[2] <- mean(c(data$PRIMHARMPRIMSUWAK.2., data$PRIMHARMPRIMSUWAK.2..1), na.rm = TRUE)
@@ -113,38 +114,59 @@ plot(dataframe4$numer, dataframe4$srednia, col=c("yellow1","blue","black","viole
 dev.copy(png,'primharmhelpbis.png')
 dev.off()
 
+
 dataframe5 <- data.frame(numer = n, srednia =c(sredniebishelpprim, sredniebishelpbis))
-plot(dataframe5$numer, dataframe5$srednia, type="n", main="Zachowanie dyrektora HELP")
-points(sredniebishelpprim, col ="red")
-points(sredniebishelpbis, col ="blue")
-dev.copy(png,'dyrektorhelp.png')
+jpeg(filename="dyrektorhelplusminus.jpeg", width = 480, height = 480, units = "px")
+par(col="darkgreen")
+plot(dataframe5$numer, dataframe5$srednia, type="n", main="Chairman's behaviour HELP", ylab="Causation level", xlab="Causal chain")
+points(sredniebishelpprim, col ="red", lwd=3, pch=dataframe8$o[dataframe8$numer])
+points(sredniebishelpbis, col ="blue", lwd=3, pch=dataframe8$m[dataframe8$numer])
+par(col="red")
+abline(mean(sredniebishelpprim),0, lty = 2)
+par(col="blue")
+abline(mean(sredniebishelpbis),0, lty = 2)
+par(col="black")
+par(lwd = "2")
+legend("right", legend =c("Positive", "Negative", "Action", "No action"), pch=(c(24, 25, 0, 0)), col=c("black", "black", "red", "blue"))
 dev.off()
 
 dataframe6 <- data.frame(numer = n, srednia =c(sredniebisharmprim, sredniebisharmbis))
-plot(dataframe6$numer, dataframe6$srednia, type="n", main="Zachowanie dyrektora HARM")
-points(sredniebisharmprim, col ="red")
-points(sredniebisharmbis, col ="blue")
-dev.copy(png,'dyrektorharm.png')
+jpeg(filename="dyrektorharmplusminus.jpeg", width = 480, height = 480, units = "px")
+par(col="darkgreen")
+plot(dataframe6$numer, dataframe6$srednia, type="n", main="Chairman's behaviour HARM", ylab="Causation level", xlab="Causal chain")
+points(sredniebisharmprim, col ="red", lwd=3, pch=dataframe8$m[dataframe8$numer])
+points(sredniebisharmbis, col ="blue", lwd=3, pch=dataframe8$o[dataframe8$numer])
+par(col="red")
+abline(mean(sredniebisharmprim),0, lty = 2)
+par(col="blue")
+abline(mean(sredniebisharmbis),0, lty = 2)
+par(col="black")
+par(lwd = "2")
+legend("topleft", legend =c("Positive", "Negative", "Action", "No action"), pch=(c(24, 25, 0, 0)), col=c("black", "black", "red", "blue"))
 dev.off()
 
 dataframe7 <- data.frame(numer = n, srednia =c(sredniebishelpprim, sredniebisharmbis))
-plot(dataframe7$numer, dataframe7$srednia, type="n", main="Zachowanie dyrektora HARM vs HELP")
+jpeg(filename="dyrektorharmvshelpplus.jpeg", width = 480, height = 480, units = "px")
+par(col="darkgreen")
+plot(dataframe7$numer, dataframe7$srednia, type="n", main="Chainrman's action HARM vs HELP", ylab="Causation level", xlab="Causal chain")
 points(sredniebishelpprim, col ="blue", lwd=3, pch=dataframe8$o[dataframe8$numer])
 points(sredniebisharmprim, col ="red", lwd=3, pch=dataframe8$m[dataframe8$numer])
 par(col="red")
 abline(mean(sredniebisharmprim),0, lty = 2)
 par(col="blue")
 abline(mean(sredniebishelpprim),0, lty = 2)
-
-dev.copy(png,'dyrektorharmvshelpplus.png')
+par(col="black")
+par(lwd = "2")
+legend("bottomright", legend =c("Positive", "Negative", "Harm", "Help"), pch=(c(24, 25, 0, 0)), col=c("black", "black", "red", "blue"))
 dev.off()
 
 ## 1. Jeœli ostatnie ogniwo jest pozytywnie moralnie to poziom przyczynienia siê jest mniejszy dla wszystkich ogniw, oprócz zakazu
 ## 2. Najbardziej od œredniej odbiegaj¹ pi¹tki, które s¹ mocno nacechowane moralnie.
 
 dataframe8 <- data.frame(numer = n, srednia =c(sredniebishelpbis, sredniebisharmbis), m=c(25, 25, 1, 24, 24), o=c(24, 24, 1, 25, 25))
+jpeg(filename="dyrektorharmvshelpminus.jpeg", width = 480, height = 480, units = "px")
 par(col="darkgreen")
-plot(dataframe8$numer, dataframe8$srednia, type="n", main="Zachowanie dyrektora HARM vs HELP", ylab="Przyczynienie", xlab="Ogniwo ³añcucha")
+plot(dataframe8$numer, dataframe8$srednia, type="n", main="No chairman's action HARM vs HELP", ylab="Causation level", xlab="Causal chain")
 points(sredniebishelpbis, col ="blue", lwd=3, pch=dataframe8$m[dataframe8$numer])
 points(sredniebisharmbis, col ="red", lwd=3, pch= dataframe8$o[dataframe8$numer])
 par(col="red")
@@ -152,9 +174,128 @@ abline(mean(sredniebisharmbis),0, lty=2)
 par(col="blue")
 abline(mean(sredniebishelpbis),0, lty=2)
 par(col="black")
-legend("topleft", legend =c("Positive", "Negative", "Harm", "Help"), lwd = 2, pch=(c(24, 25, 0, 0)), col=c("black", "black", "red", "blue"))
-dev.copy(png,'dyrektorharmvshelpminus.png')
+par(lwd = "2")
+legend("topleft", legend =c("Positive", "Negative", "Harm", "Help"), pch=(c(24, 25, 0, 0)), col=c("black", "black", "red", "blue"))
+dev.off()
+
 
 plot(1:5, c(1.5,2,2,3,3.5), type="n")
 points(srednienotkrukiwronybis, col="blue")
 points(sredniekrukiwronybis, col="red")
+
+jpeg(filename="agencyharmplus.jpeg", width = 720, height = 720, units = "px")
+barplot(c(mean(as.numeric(data$AGENCYHARMPRIM.1.[!as.vector(data$AGENCYHARMPRIM.1.) == ""])-2),
+mean(as.numeric(data$AGENCYHARMPRIM.2.[!as.vector(data$AGENCYHARMPRIM.2.) == ""])-2),
+mean(as.numeric(data$AGENCYHARMPRIM.3.[!as.vector(data$AGENCYHARMPRIM.3.) == ""])-2),
+mean(as.numeric(data$AGENCYHARMPRIM.4.[!as.vector(data$AGENCYHARMPRIM.4.) == ""])-2),
+mean(as.numeric(data$AGENCYHARMPRIM.5.[!as.vector(data$AGENCYHARMPRIM.5.) == ""])-2)), 
+main="Agency in HARM scenario with chairman's action",
+col=c("grey", "grey", "red", "grey", "blue"),
+names.arg=c("no destruction of embankments", "no flood", "dry of bogs", "cultivation", "no hunger"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+
+
+jpeg(filename="agencyharmminus.jpeg", width = 720, height = 720, units = "px")
+barplot(c(mean(c(as.numeric(data$AGENCYHARMBIS.1.[!as.vector(data$AGENCYHARMBIS.1.) == ""])-2, AGENCYHARMBIS1-1)),
+mean(c(as.numeric(data$AGENCYHARMBIS.2.[!as.vector(data$AGENCYHARMBIS.2.) == ""])-2, AGENCYHARMBIS2-1)),
+mean(AGENCYHARMBIS3-1),
+mean(c(as.numeric(data$AGENCYHARMBIS.4.[!as.vector(data$AGENCYHARMBIS.4.) == ""])-2, AGENCYHARMBIS4-1)),
+mean(c(as.numeric(data$AGENCYHARMBIS.5.[!as.vector(data$AGENCYHARMBIS.5.) == ""])-2, AGENCYHARMBIS5-1))),
+main="Agency in HARM scenario without chairman's action",
+col=c("grey", "grey", "blue", "grey", "red"),
+names.arg=c("destruction of embankments", "flood", "bogs not dry", "no cultivation", "hunger"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+jpeg(filename="agencyharmminus2.jpeg", width = 720, height = 720, units = "px")
+barplot(c(mean(AGENCYHARMBIS1-1),
+          mean(AGENCYHARMBIS2-1),
+          mean(AGENCYHARMBIS3-1),
+          mean(AGENCYHARMBIS4-1),
+          mean(AGENCYHARMBIS5-1)),
+        main="Agency in HARM scenario without chairman's action",
+        col=c("grey", "grey", "blue", "grey", "red"),
+        names.arg=c("destruction of embankments", "flood", "bogs not dry", "no cultivation", "hunger")
+        )
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+
+jpeg(filename="agencyhelpplus.jpeg", width = 720, height = 720, units = "px")
+barplot(c(mean(as.numeric(data$AGENCYHELPPRIM.1.[!as.vector(data$AGENCYHELPPRIM.1.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPPRIM.2.[!as.vector(data$AGENCYHELPPRIM.2.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPPRIM.3.[!as.vector(data$AGENCYHELPPRIM.3.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPPRIM.4.[!as.vector(data$AGENCYHELPPRIM.4.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPPRIM.5.[!as.vector(data$AGENCYHELPPRIM.5.) == ""])-2)),
+main="Agency in HELP scenario with chairman's action",
+col=c("grey", "grey", "blue", "grey", "red"),
+names.arg=c("destruction of embankments", "no flood", "forest revival", "no cultivation", "hunger"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+jpeg(filename="agencyhelpminus.jpeg", width = 720, height = 720, units = "px")
+barplot(c(mean(as.numeric(data$AGENCYHELPBIS.1.[!as.vector(data$AGENCYHELPBIS.1.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPBIS.2.[!as.vector(data$AGENCYHELPBIS.2.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPBIS.3.[!as.vector(data$AGENCYHELPBIS.3.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPBIS.4.[!as.vector(data$AGENCYHELPBIS.4.) == ""])-2),
+mean(as.numeric(data$AGENCYHELPBIS.5.[!as.vector(data$AGENCYHELPBIS.5.) == ""])-2)),
+main="Agency in HELP scenario without chairman's action",
+col=c("grey", "grey", "red", "grey", "blue"),
+names.arg=c("no destruction of embankments", "flood", "no forest revival", "cultivation", "no hunger"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+
+AGENCYHARMBIS1 <- as.numeric(data3$AGENCYHARMBIS.1.[!as.vector(data3$AGENCYHARMBIS.1.) ==""])
+AGENCYHARMBIS2 <- as.numeric(data3$AGENCYHARMBIS.2.[!as.vector(data3$AGENCYHARMBIS.2.) ==""])
+AGENCYHARMBIS3 <- as.numeric(data3$AGENCYHARMBIS.3.[!as.vector(data3$AGENCYHARMBIS.3.) ==""])
+AGENCYHARMBIS4 <- as.numeric(data3$AGENCYHARMBIS.4.[!as.vector(data3$AGENCYHARMBIS.4.) ==""])
+AGENCYHARMBIS5 <- as.numeric(data3$AGENCYHARMBIS.5.[!as.vector(data3$AGENCYHARMBIS.5.) ==""])
+
+INTENTIONALITYHARMPRIM1 <- as.numeric(data$INTHARMPRIM1[!as.vector(data$INTHARMPRIM1)=="N/A"])-2
+INTENTIONALITYHARMPRIM2 <- as.numeric(data$INTHARMPRIM2[!as.vector(data$INTHARMPRIM2)=="N/A"])-2
+INTENTIONALITYHARMBIS1 <- as.numeric(data$INTHARMBIS[!as.vector(data$INTHARMBIS)=="N/A"])-2
+INTENTIONALITYHARMBIS2 <- as.numeric(data$INTHARMBIS2[!as.vector(data$INTHARMBIS2)=="N/A"])-2
+INTENTIONALITYHELPPRIM1 <- as.numeric(data$INTHELPPRIM[!as.vector(data$INTHELPPRIM)=="N/A"])-2
+INTENTIONALITYHELPPRIM2 <- as.numeric(data$INTHELPPRIM2[!as.vector(data$INTHELPPRIM2)=="N/A"])-2
+INTENTIONALITYHELPBIS1 <- as.numeric(data$INTHELPBIS[!as.vector(data$INTHELPBIS)=="N/A"])-2
+INTENTIONALITYHELPBIS2 <- as.numeric(data$INTHELPBIS2[!as.vector(data$INTHELPBIS2)=="N/A"])-2
+
+
+
+
+jpeg(filename="intentionalityharmprim.jpeg", width = 720, height = 720, units = "px")
+
+barplot(
+        c(mean(INTENTIONALITYHARMPRIM1), mean(INTENTIONALITYHARMPRIM2)),
+        names.arg=c("Does he intentionally harm environment?", "Does he intentionally help people"),
+        col=c("red", "blue"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+jpeg(filename="intentionalityharmbis.jpeg", width = 720, height = 720, units = "px")
+
+barplot(
+        c(mean(INTENTIONALITYHARMBIS1), mean(INTENTIONALITYHARMBIS2)),
+        names.arg=c("Does he intentionally help environment?", "Does he intentionally harm people"),
+        col=c("blue", "red"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+jpeg(filename="intentionalityhelpprim.jpeg", width = 720, height = 720, units = "px")
+barplot(
+        c(mean(INTENTIONALITYHELPPRIM1), mean(INTENTIONALITYHELPPRIM2)),
+        names.arg=c("Does he intentionally help environment?", "Does he intentionally harm people"),
+        col=c("blue", "red"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
+
+jpeg(filename="intentionalityhelpbis.jpeg", width = 720, height = 720, units = "px")
+barplot(
+        c(mean(INTENTIONALITYHELPBIS1), mean(INTENTIONALITYHELPBIS2)),
+        names.arg=c("Does he intentionally harm environment?", "Does he intentionally help people"),
+        col=c("red", "blue"))
+legend("topright", legend=c("Morally good", "Morally bad"), pch=22, pt.bg =c("blue", "red"))
+dev.off()
